@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Central de Insights | Mareias Villas</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --gold: #d6a85f;
+      --gold-light: #f3ddb2;
+      --cream: #f5ead7;
+      --dark: #06191a;
+      --glass: rgba(10, 31, 32, 0.58);
+      --border: rgba(214, 168, 95, 0.68);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      min-height: 100vh;
+      font-family: 'Montserrat', sans-serif;
+      color: var(--cream);
+      background: var(--dark);
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background:
+        linear-gradient(180deg, rgba(4, 13, 14, .56), rgba(4, 13, 14, .78) 48%, rgba(4, 13, 14, .94)),
+        radial-gradient(circle at center, rgba(214, 168, 95, .16), transparent 52%),
+        url('fundo-mareias.jpg');
+      background-size: cover;
+      background-position: center;
+      z-index: -2;
+    }
+
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,.18);
+      backdrop-filter: saturate(88%);
+      z-index: -1;
+    }
+
+    .page {
+      width: min(1180px, calc(100% - 40px));
+      min-height: 100vh;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 54px 0 42px;
+      text-align: center;
+    }
+
+    .logo {
+      width: clamp(230px, 34vw, 410px);
+      height: auto;
+      margin-bottom: 38px;
+      filter: drop-shadow(0 16px 34px rgba(0,0,0,.42));
+    }
+
+    .title {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.3rem, 5.4vw, 5.35rem);
+      font-weight: 400;
+      letter-spacing: clamp(5px, 1.3vw, 16px);
+      text-transform: uppercase;
+      line-height: 1.04;
+      text-shadow: 0 12px 32px rgba(0,0,0,.5);
+    }
+
+    .divider {
+      width: 70px;
+      height: 2px;
+      margin: 21px auto 19px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+
+    .subtitle {
+      max-width: 640px;
+      margin: 0 auto 44px;
+      font-size: clamp(.96rem, 1.6vw, 1.2rem);
+      font-weight: 300;
+      line-height: 1.55;
+      color: rgba(245, 234, 215, .95);
+      text-shadow: 0 8px 22px rgba(0,0,0,.72);
+    }
+
+    .cards {
+      width: 100%;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .card {
+      position: relative;
+      min-height: 330px;
+      padding: 34px 26px 30px;
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(8, 34, 35, .68), rgba(15, 23, 24, .54));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 18px 48px rgba(0,0,0,.26);
+      backdrop-filter: blur(13px);
+      color: var(--cream);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: space-between;
+      overflow: hidden;
+      transition: transform .28s ease, border-color .28s ease, background .28s ease, box-shadow .28s ease;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at top, rgba(243, 221, 178, .16), transparent 44%);
+      opacity: .72;
+      pointer-events: none;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      border-color: var(--gold-light);
+      background: linear-gradient(145deg, rgba(10, 46, 48, .76), rgba(25, 27, 25, .62));
+      box-shadow: inset 0 1px 0 rgba(255,255,255,.13), 0 26px 62px rgba(0,0,0,.38);
+    }
+
+    .card-content, .access { position: relative; z-index: 1; }
+
+    .icon {
+      width: 72px;
+      height: 72px;
+      margin: 0 auto 22px;
+      color: var(--gold);
+    }
+
+    .icon svg {
+      width: 100%;
+      height: 100%;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 1.35;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .label {
+      display: block;
+      margin-bottom: 18px;
+      color: var(--gold-light);
+      font-size: .68rem;
+      font-weight: 500;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+    }
+
+    .card h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.72rem, 2.1vw, 2.15rem);
+      font-weight: 400;
+      line-height: 1;
+      margin-bottom: 18px;
+    }
+
+    .card p {
+      font-size: .88rem;
+      font-weight: 300;
+      line-height: 1.72;
+      color: rgba(245, 234, 215, .9);
+    }
+
+    .access {
+      width: 100%;
+      margin-top: 26px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      color: var(--gold-light);
+      font-size: .72rem;
+      font-weight: 600;
+      letter-spacing: 1.6px;
+      text-transform: uppercase;
+    }
+
+    .access::after {
+      content: '→';
+      font-size: 1.35rem;
+      line-height: 1;
+      transition: transform .28s ease;
+    }
+
+    .card:hover .access::after { transform: translateX(6px); }
+
+    .footer-mark {
+      width: min(480px, 78vw);
+      margin: 48px auto 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      color: var(--gold);
+    }
+
+    .footer-mark::before,
+    .footer-mark::after {
+      content: '';
+      height: 1px;
+      flex: 1;
+      background: linear-gradient(90deg, transparent, var(--gold));
+    }
+
+    .footer-mark::after { background: linear-gradient(90deg, var(--gold), transparent); }
+
+    .mini-logo { width: 54px; height: auto; opacity: .95; }
+
+    footer {
+      color: rgba(245, 234, 215, .82);
+      font-size: .76rem;
+      letter-spacing: 5px;
+      text-transform: uppercase;
+      line-height: 2;
+    }
+
+    @media (max-width: 1024px) {
+      .page { width: min(920px, calc(100% - 34px)); justify-content: flex-start; }
+      .cards { grid-template-columns: repeat(2, 1fr); }
+      .card { min-height: 285px; }
+    }
+
+    @media (max-width: 620px) {
+      body::before { background-position: center top; }
+      .page { width: min(100% - 28px, 440px); padding: 34px 0 28px; }
+      .logo { width: min(78vw, 310px); margin-bottom: 28px; }
+      .title { letter-spacing: 5px; font-size: clamp(2.05rem, 10.5vw, 3.6rem); }
+      .subtitle { margin-bottom: 28px; font-size: .96rem; }
+      .cards { grid-template-columns: 1fr; gap: 14px; }
+      .card {
+        min-height: auto;
+        padding: 22px 22px;
+        border-radius: 18px;
+        text-align: left;
+        align-items: stretch;
+      }
+      .card-content {
+        display: grid;
+        grid-template-columns: 58px 1fr;
+        column-gap: 16px;
+        align-items: center;
+      }
+      .icon { width: 54px; height: 54px; margin: 0; grid-row: span 3; }
+      .label { margin-bottom: 8px; letter-spacing: 3px; font-size: .62rem; }
+      .card h2 { margin-bottom: 8px; font-size: 1.55rem; }
+      .card p { font-size: .78rem; line-height: 1.45; }
+      .access { margin-top: 16px; font-size: .66rem; }
+      .footer-mark { margin-top: 34px; gap: 16px; }
+      .mini-logo { width: 38px; }
+      footer { font-size: .62rem; letter-spacing: 3px; }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <img src="logo-mareias.png" alt="Mareias Villas" class="logo" />
+
+    <h1 class="title">Central de Insights</h1>
+    <div class="divider"></div>
+
+    <p class="subtitle">
+      Acompanhamento estratégico dos canais digitais da Mareias Villas,
+      com dashboards exclusivos e dados atualizados diariamente.
+    </p>
+
+    <section class="cards" aria-label="Dashboards disponíveis">
+      <a class="card" href="https://zehenriquecl.github.io/dashboard-instagramMAREIAS/" target="_blank" rel="noopener">
+        <div class="card-content">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><rect x="14" y="14" width="36" height="36" rx="10"/><circle cx="32" cy="32" r="9"/><circle cx="43" cy="21" r="2"/></svg>
+          </div>
+          <span class="label">Social Media</span>
+          <h2>Instagram</h2>
+          <p>Performance, crescimento, alcance e indicadores do perfil oficial.</p>
+        </div>
+        <div class="access">Acessar dashboard</div>
+      </a>
+
+      <a class="card" href="https://zehenriquecl.github.io/dashboard-facebookMAREIAS/" target="_blank" rel="noopener">
+        <div class="card-content">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><circle cx="32" cy="32" r="22"/><path d="M36 20h-5c-4 0-7 3-7 8v5h-4v8h4v13h9V41h7l2-8h-9v-5c0-1.6 1-2.8 3-2.8h4V20z"/></svg>
+          </div>
+          <span class="label">Fanpage</span>
+          <h2>Facebook</h2>
+          <p>Dados da página, presença institucional, alcance e evolução.</p>
+        </div>
+        <div class="access">Acessar dashboard</div>
+      </a>
+
+      <a class="card" href="https://zehenriquecl.github.io/dashboard-metaMAREIAS/" target="_blank" rel="noopener">
+        <div class="card-content">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><path d="M14 48h38"/><path d="M18 44V30h8v14"/><path d="M30 44V22h8v22"/><path d="M42 44V34h8v10"/><path d="M14 18c10 2 18 1 28-8"/><path d="M42 10h10v10"/></svg>
+          </div>
+          <span class="label">Tráfego Pago</span>
+          <h2>Meta Ads</h2>
+          <p>Resultados das campanhas patrocinadas no Facebook e Instagram.</p>
+        </div>
+        <div class="access">Acessar dashboard</div>
+      </a>
+
+      <a class="card" href="https://zehenriquecl.github.io/dashboard-GA4MAREIAS/" target="_blank" rel="noopener">
+        <div class="card-content">
+          <div class="icon" aria-hidden="true">
+            <svg viewBox="0 0 64 64"><rect x="15" y="13" width="34" height="38" rx="7"/><path d="M15 24h34"/><circle cx="32" cy="39" r="9"/><path d="M23 39h18"/><path d="M32 30c4 4 4 14 0 18"/><path d="M32 30c-4 4-4 14 0 18"/></svg>
+          </div>
+          <span class="label">Website</span>
+          <h2>GA4 Site</h2>
+          <p>Acessos, comportamento dos usuários e desempenho do site oficial.</p>
+        </div>
+        <div class="access">Acessar dashboard</div>
+      </a>
+    </section>
+
+    <div class="footer-mark">
+      <img src="mini-logo-mareias.png" alt="" class="mini-logo" />
+    </div>
+
+    <footer>
+      <div>Dashboards exclusivos • Mareias Villas</div>
+      <div>REFA Estúdio de Criação</div>
+    </footer>
+  </main>
+</body>
+</html>
